@@ -14,9 +14,10 @@ const usersGet =  ( req = request , res = response ) =>  {
     }
 
 const usersPost = async ( req, res = response ) =>  {
-    const body = req.body;
 
-    const usuario = new Usuario( body );
+    const { userName, userEmail, userPassword, userRole }= req.body;
+
+    const usuario = new Usuario( {  userName, userEmail, userPassword, userRole  } );
 
     await usuario.save();
 
