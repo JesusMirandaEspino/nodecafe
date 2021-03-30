@@ -10,7 +10,10 @@ const router = Router();
     router.put( '/:id', usersPut );
 
     router.post( '/', [
-        check('userEmail', 'El correo no es valido').isEmail()
+        check('userName', 'El nombre es obligatorio').not().isEmpty(),
+        check('userPassword', 'El password debe de ser mas de 6 letras').isLength( { min: 6 } ) ,
+        check('userEmail', 'El correo no es valido').isEmail(),
+        check('userRole', 'No es un Rol Valido').isIn( [ 'ADMIN_ROLE', 'USER_ROLE' ] ),
     ] , usersPost );
 
     router.delete( '/', usersDelete );
