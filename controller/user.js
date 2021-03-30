@@ -1,7 +1,7 @@
 const { response, request } = require( 'express' );
 const Usuario = require( '../models/user.js' );
 const bcryptjs = require( 'bcryptjs' );
-const { validationResult } = require('express-validator');
+
 
 const usersGet =  ( req = request , res = response ) =>  {
     const { q, nombre = 'No name', apikey, page = 5, limit } = req.query
@@ -17,12 +17,6 @@ const usersGet =  ( req = request , res = response ) =>  {
 
 const usersPost = async ( req, res = response ) =>  {
 
-
-    const errors = validationResult(  req );
-    if(!errors.isEmpty()){
-        return res.status(400).json( errors );
-
-    }
 
     const { userName, userEmail, userPassword, userRole }= req.body;
     const usuario = new Usuario( {  userName, userEmail, userPassword, userRole  } );

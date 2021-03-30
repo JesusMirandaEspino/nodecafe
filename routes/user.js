@@ -1,5 +1,6 @@
 const { Router } = require( 'express' );
 const { check } = require('express-validator');
+const { validarCampos } = require('../middlewares/validar.js');
 
 const {  usersGet, usersPost, usersPut, usersDelete, usersPath } = require( '../controller/user' );
 
@@ -14,6 +15,7 @@ const router = Router();
         check('userPassword', 'El password debe de ser mas de 6 letras').isLength( { min: 6 } ) ,
         check('userEmail', 'El correo no es valido').isEmail(),
         check('userRole', 'No es un Rol Valido').isIn( [ 'ADMIN_ROLE', 'USER_ROLE' ] ),
+        validarCampos
     ] , usersPost );
 
     router.delete( '/', usersDelete );
