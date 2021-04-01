@@ -29,12 +29,7 @@ const usersPost = async ( req, res = response ) =>  {
     user.userPassword = bcryptjs.hashSync( userPassword, salt );
 
 
-    const existeEmail = await User.findOne( { userEmail } );
-    if( existeEmail ){
-        return res.status(400).json({
-            msg: 'El correo ya esta Registrado'
-        });
-    }
+
 
     //Guardar en DB
     await user.save();
