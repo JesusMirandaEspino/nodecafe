@@ -73,17 +73,25 @@ const usersPut = async ( req, res = response ) =>  {
         });
     } 
 
-const usersDelete =  ( req, res = response ) =>  {
-    res.json( {
-        msg: 'Delete API'
-        });
+const usersDelete = async ( req, res = response ) =>  {
+
+    const { id } = req.params;
+
+    // metodo borrar definitivamente
+    // const user = await User.findByIdAndDelete( id );
+
+    const user = await User.findByIdAndUpdate( id, { userStatus: false } );
+
+    res.json( user );
     } 
     
-const usersPath =  ( req, res = response ) =>  {
+const usersPath = ( req, res = response ) =>  {
+
     res.json( {
         msg: 'Patch API'
         });
     } 
+
 
     module.exports = {
         usersGet,
