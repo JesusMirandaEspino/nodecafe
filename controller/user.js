@@ -7,12 +7,16 @@ const usersGet = async ( req = request , res = response ) =>  {
 
    // const { q, nombre = 'No name', apikey, page = 5, limit } = req.query;
 
+    const statusUser = { userStatus: true };
     const { limite = 5, desde = 0 } = req.query;
-    const users = await User.find()
+    const users = await User.find( statusUser  )
     .skip( Number(desde) )
     .limit( Number(limite) );
 
+    const total = await User.countDocuments( statusUser  );
+
     res.json( {
+        total,
         users
         });
     }
