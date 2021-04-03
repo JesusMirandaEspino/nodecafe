@@ -3,15 +3,14 @@ const User = require( '../models/user.js' );
 const bcryptjs = require( 'bcryptjs' );
 
 
-const usersGet =  ( req = request , res = response ) =>  {
-    const { q, nombre = 'No name', apikey, page = 5, limit } = req.query
+const usersGet = async ( req = request , res = response ) =>  {
+
+   // const { q, nombre = 'No name', apikey, page = 5, limit } = req.query;
+
+    const users = await User.find();
+
     res.json( {
-        msg: 'Get API',
-        q,
-        nombre,
-        apikey,
-        page,
-        limit
+        users
         });
     }
 
@@ -42,7 +41,7 @@ const usersPost = async ( req, res = response ) =>  {
 
 const usersPut = async ( req, res = response ) =>  {
     const id = req.params.id;
-    const { userPassword, Google, userEmail, ...rest  } = req.body;
+    const { _id ,userPassword, Google, userEmail, ...rest  } = req.body;
 
     //TODO validar con base de datos
     if( userPassword ){
