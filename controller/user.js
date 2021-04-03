@@ -7,7 +7,10 @@ const usersGet = async ( req = request , res = response ) =>  {
 
    // const { q, nombre = 'No name', apikey, page = 5, limit } = req.query;
 
-    const users = await User.find();
+    const { limite = 5, desde = 0 } = req.query;
+    const users = await User.find()
+    .skip( Number(desde) )
+    .limit( Number(limite) );
 
     res.json( {
         users
