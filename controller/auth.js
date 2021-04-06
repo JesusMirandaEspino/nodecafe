@@ -9,3 +9,8 @@ const login = ( req, res = response ) =>  {
 
 
 }
+
+
+module.exports = {
+    login
+}
