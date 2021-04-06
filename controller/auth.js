@@ -1,5 +1,6 @@
 const { response } = require('Express');
 const User = require('../models/user');
+const bcryptjs = require( 'bcryptjs' );
 
 const login = async ( req, res = response ) =>  {
 
@@ -9,18 +10,42 @@ const login = async ( req, res = response ) =>  {
 
     try{
 
-        //Verificar si usuario existe 
+        
         const user =  await User.findOne( { userEmail } );
 
+
+        //Verificar si usuario existe 
         if( !user ){
             return res.status(400).json({
                 msg: 'Usario / password no son correcto -correo'
             });
         }
+                
+
+
+
+        //verificar si el usuario esta activo
+        if( !user.userStatus ){
+            return res.status(400).json({
+                msg: 'Usario / password no son correcto - status: false'
+            });
+        }
+
+        //verificar contraseña
+        const validPassword = bcryptjs.compareSync( userPassword, user.userPassword);
+
+
+
+        if( !validPassword ){
+            return res.status(400).json({
+                msg: 'Usario / password no son correcto - password'
+            });
+        }
+
 
         res.json({
         msg: 'login',
-        
+        userPassword
 
         });
 
