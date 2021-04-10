@@ -49,7 +49,8 @@ const login = async ( req, res = response ) =>  {
 
         res.json({
         msg: 'login',
-        userPassword
+        userPassword,
+        token
 
         });
 
