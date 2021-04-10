@@ -45,3 +45,16 @@ userShema.methods.toJSON = function(){
 }
 
 module.exports = model( 'User', userShema );
+
+
+/*
+
+        "userName": "test15",
+        "userEmail": "test15@dominio.com",
+        "userPassword": "48156446huidisfhs&",
+        "userRole":  "USER_ROLE",
+        "userStatus":  true,
+        "Google": false
+
+
+*/ 

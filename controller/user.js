@@ -76,6 +76,7 @@ const usersDelete = async ( req, res = response ) =>  {
     const { id } = req.params;
 
     const uid = req.uid;
+    const userauth = req.user;
 
 
     // metodo borrar definitivamente
@@ -83,7 +84,7 @@ const usersDelete = async ( req, res = response ) =>  {
 
     const user = await User.findByIdAndUpdate( id, { userStatus: false } );
 
-    res.json( {user,  uid});
+    res.json( {user,  uid, userauth});
     } 
     
 const usersPath = ( req, res = response ) =>  {
