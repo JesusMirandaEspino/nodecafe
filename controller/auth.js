@@ -63,8 +63,11 @@ const login = async ( req, res = response ) =>  {
 }
 
 const googleSignIng = ( req, res = response ) => {
+
+    const { id_token } = req.body;
     res.json({
-        msg: 'Todo ok, google sign in validado'
+        msg: 'Todo ok, google sign in validado',
+        id_token
     });
 }
 
