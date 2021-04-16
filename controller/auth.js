@@ -62,7 +62,13 @@ const login = async ( req, res = response ) =>  {
     }
 }
 
+const googleSignIng = ( req, res = response ) => {
+    res.json({
+        msg: 'Todo ok, google sign in validado'
+    });
+}
 
 module.exports = {
-    login
+    login,
+    googleSignIng
 }
