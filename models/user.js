@@ -32,7 +32,11 @@ const userShema = Schema({
     Google: {
         type: Boolean,
         default: false
-    }  
+    }, 
+    
+    userImg: {
+        type: String
+    }
 
 }); 
 

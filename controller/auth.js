@@ -68,12 +68,13 @@ const googleSignIng = async ( req, res = response ) => {
 
     const { id_token } = req.body;
 
+    try{
+
     const googleUser = await  googleVerify( id_token );
 
-    try{
+    
     res.json({
         msg: 'Todo ok, google sign in validado',
-
     });
     }catch(error){
         res.status(400).json({
