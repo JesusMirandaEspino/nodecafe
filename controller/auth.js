@@ -70,9 +70,26 @@ const googleSignIng = async ( req, res = response ) => {
 
     try{
 
-    const googleUser = await  googleVerify( id_token );
+    const { userEmail, userName, userImg } = await  googleVerify( id_token );
 
+
+    let user = User.findOne( {userEmail} );
     
+
+        if( !user ){
+            //Crear usuario
+            const data = {
+                userName,
+                userEmail,
+                userPassword: ':p',
+                userImg,
+                Google: true
+
+            }
+
+            user = new User( data );
+        }
+
     res.json({
         msg: 'Todo ok, google sign in validado',
     });
