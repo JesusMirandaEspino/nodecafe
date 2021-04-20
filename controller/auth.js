@@ -88,16 +88,33 @@ const googleSignIng = async ( req, res = response ) => {
             }
 
             user = new User( data );
+            await (await user).save();
         }
+
+
+        //Verificar si usuario esta activo
+
+        if( !user.userStatus ){
+            return res.status(401).json({
+                msg: 'Hable con el administrador - Usuario inactivo'
+            });
+        }
+
+        //Generar el JWT
+        const token = await generarJWT(  user.id  );
 
     res.json({
         msg: 'Todo ok, google sign in validado',
+        token,
+        user
     });
     }catch(error){
         res.status(400).json({
             msg: 'El token no es valido'
         });
     }
+
+    console.log( user );
 
 
 
