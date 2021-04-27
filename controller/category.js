@@ -2,14 +2,17 @@ const response = require('express');
 const { Category } = require('../models');
 
 
-const obtenerCategory = async  (req, res = response ) => {
+const obtenerCategories = async  (req, res = response ) => {
 
     const statusUser = { userStatus: true };
     const { limite = 5, desde = 0 } = req.query;
 
     const [ total, categories ] = await Promise.all( [
         Category.countDocuments( statusUser  ),
-        Category.find( statusUser  ).skip( Number(desde) ).limit( Number(limite) )
+        Category.find( statusUser  )
+        .populate( 'user', 'userName' )
+        .skip( Number(desde) )
+        .limit( Number(limite) )
     ] );
 
     res.json( {
@@ -47,8 +50,20 @@ const crearCategory = async  ( req, res = response  ) =>   {
 }
 
 
+const obtenerCategory = async ( req, res = response) => {
+    const { id } = req.params;
+    const category = await Category.findById(id).populate( 'user', 'userName' );
+
+    res.json({
+        category
+    });
+
+}
+
+
 
 module.exports = {
     crearCategory,
+    obtenerCategories,
     obtenerCategory
 }

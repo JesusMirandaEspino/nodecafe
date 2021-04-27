@@ -21,4 +21,11 @@ const CategoryShema = Schema({
 });
 
 
+userShema.methods.toJSON = function(){
+    const { __v, userStatus,   ...data } = this.toObject();
+    return data;
+}
+
+
+
 module.exports = model( 'Category', CategoryShema );    
