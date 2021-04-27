@@ -21,7 +21,7 @@ const CategoryShema = Schema({
 });
 
 
-userShema.methods.toJSON = function(){
+CategoryShema.methods.toJSON = function(){
     const { __v, userStatus,   ...data } = this.toObject();
     return data;
 }
