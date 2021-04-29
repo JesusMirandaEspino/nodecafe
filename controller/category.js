@@ -50,6 +50,21 @@ const crearCategory = async  ( req, res = response  ) =>   {
 }
 
 
+const actualizarCategory = async ( req, res = response ) => {
+    const { id } = req.params;
+    const { userStatus, user, ...data } = req.body;
+
+    data.categoryname = data.categoryname.toUpperCase();
+    data.user = req.user._id;
+
+    const category = Category.findByIdAndUpdate( id, data,  {new: true  } );
+
+    res.json( category );
+
+}
+
+
+
 const obtenerCategory = async ( req, res = response) => {
     const { id } = req.params;
     const category = await Category.findById(id).populate( 'user', 'userName' );
@@ -65,5 +80,6 @@ const obtenerCategory = async ( req, res = response) => {
 module.exports = {
     crearCategory,
     obtenerCategories,
-    obtenerCategory
+    obtenerCategory,
+    actualizarCategory
 }
