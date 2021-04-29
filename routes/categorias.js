@@ -1,9 +1,9 @@
 const { Router } = require( 'express' );
 const { check } = require('express-validator');
-const { crearCategory, obtenerCategories, obtenerCategory, actualizarCategory  } = require('../controller/category.js');
+const { crearCategory, obtenerCategories, obtenerCategory, actualizarCategory, borrarCategory  } = require('../controller/category.js');
 const { existeCategoryPorId   } = require('../helpers/db-validators.js');
 
-const { validarJWT, validarCampos } = require('../middlewares');
+const { validarJWT, validarCampos, esAdminRole } = require('../middlewares');
 
 const router = Router();
 
@@ -35,11 +35,13 @@ const router = Router();
     ] , actualizarCategory );
 
 // Borrar categoria Admin
-    router.delete('/:id', ( req, res ) => {
-        res.json({
-            msg: 'Desactivar'
-        });
-    });
+    router.delete('/:id', [
+        validarJWT,
+        esAdminRole,
+        check('id', 'No es un id de mongo').isMongoId(),
+        check('id').custom( existeCategoryPorId ),
+        validarCampos
+    ] , borrarCategory );
 
 
 module.exports = router; 
