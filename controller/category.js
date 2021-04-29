@@ -37,7 +37,7 @@ const crearCategory = async  ( req, res = response  ) =>   {
 //Generar Guardar
     const data = { 
         categoryname,
-        user: red.user._id  
+        user: req.user._id  
     }
 
     const category = new Category(data);
@@ -57,9 +57,9 @@ const actualizarCategory = async ( req, res = response ) => {
     data.categoryname = data.categoryname.toUpperCase();
     data.user = req.user._id;
 
-    const category = Category.findByIdAndUpdate( id, data,  {new: true  } );
+    const category = await Category.findByIdAndUpdate( id, data,  {new: true  } );
 
-    res.json( category );
+    res.json( { category } );
 
 }
 
