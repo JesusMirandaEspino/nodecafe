@@ -16,7 +16,9 @@ constructor(){
     this.paths = {
         auth: '/api/auth',
         categorias: '/api/categorias',
-        usuarios: '/api/users'
+        products: '/api/products',
+        usuarios: '/api/users',
+        
     }
 
 
