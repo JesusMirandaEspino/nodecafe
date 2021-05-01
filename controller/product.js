@@ -11,6 +11,7 @@ const obtenerProducts = async  (req, res = response ) => {
         Product.countDocuments( statusUser  ),
         Product.find( statusUser  )
         .populate( 'user', 'userName' )
+        .populate( 'category', 'categoryname' )
         .skip( Number(desde) )
         .limit( Number(limite) )
     ] );
@@ -25,7 +26,7 @@ const obtenerProducts = async  (req, res = response ) => {
 
 
 const crearProduct = async  ( req, res = response  ) =>   {
-    const productname = req.body.productname.toUpperCase();
+    const { available, user, ...body   } = req.body;
     const productDB = await Product.findOne({productname});
 
     if(productDB){
@@ -36,7 +37,8 @@ const crearProduct = async  ( req, res = response  ) =>   {
 
 //Generar Guardar
     const data = { 
-        productname,
+        ...body,
+        productname: body.productname.toUpperCase(),
         user: req.user._id  
     }
 
@@ -54,7 +56,11 @@ const actualizarProduct = async ( req, res = response ) => {
     const { id } = req.params;
     const { userStatus, user, ...data } = req.body;
 
-    data.productname = data.productname.toUpperCase();
+    if(data.productname){
+        data.productname = data.productname.toUpperCase();
+    }
+
+
     data.user = req.user._id;
 
     const product = await Product.findByIdAndUpdate( id, data,  { new: true  } );
@@ -67,7 +73,7 @@ const actualizarProduct = async ( req, res = response ) => {
 
 const obtenerProduct = async ( req, res = response) => {
     const { id } = req.params;
-    const product = await Product.findById(id).populate( 'user', 'userName' );
+    const product = await Product.findById(id).populate( 'user', 'userName' ).populate( 'category', 'categoryname' );
 
     res.json({
         product

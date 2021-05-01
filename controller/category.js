@@ -4,12 +4,12 @@ const { Category } = require('../models');
 
 const obtenerCategories = async  (req, res = response ) => {
 
-    const statusUser = { userStatus: true };
+    const categorystatus = { categorystatus: true };
     const { limite = 5, desde = 0 } = req.query;
 
     const [ total, categories ] = await Promise.all( [
-        Category.countDocuments( statusUser  ),
-        Category.find( statusUser  )
+        Category.countDocuments( categorystatus ),
+        Category.find( categorystatus  )
         .populate( 'user', 'userName' )
         .skip( Number(desde) )
         .limit( Number(limite) )
