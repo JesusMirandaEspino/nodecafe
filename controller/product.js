@@ -4,12 +4,12 @@ const { Product } = require('../models');
 
 const obtenerProducts = async  (req, res = response ) => {
 
-    const statusUser = { userStatus: true };
+    const available= { available: true };
     const { limite = 5, desde = 0 } = req.query;
 
     const [ total, products ] = await Promise.all( [
         Product.countDocuments( statusUser  ),
-        Product.find( statusUser  )
+        Product.find( available )
         .populate( 'user', 'userName' )
         .populate( 'category', 'categoryname' )
         .skip( Number(desde) )
@@ -27,7 +27,7 @@ const obtenerProducts = async  (req, res = response ) => {
 
 const crearProduct = async  ( req, res = response  ) =>   {
     const { available, user, ...body   } = req.body;
-    const productDB = await Product.findOne({productname});
+    const productDB = await Product.findOne({  productname: body.roductname });
 
     if(productDB){
         return res.status(400).json({
