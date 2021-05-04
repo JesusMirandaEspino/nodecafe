@@ -14,10 +14,11 @@ constructor(){
 
 
     this.paths = {
-        auth: '/api/auth',
-        categorias: '/api/categorias',
-        products: '/api/products',
-        usuarios: '/api/users',
+        auth:        '/api/auth',
+        buscar:      '/api/buscar',
+        categorias:  '/api/categorias',
+        products:    '/api/products',
+        usuarios:    '/api/users',
         
     }
 
@@ -50,10 +51,11 @@ middlewares(){
 
 routes(){
 
-    this.app.use(   this.paths.auth, require('../routes/auth') );
-    this.app.use(   this.paths.categorias, require('../routes/categorias') );
-    this.app.use(   this.paths.products, require('../routes/products') );
-    this.app.use(   this.paths.usuarios, require('../routes/user') );
+    this.app.use(   this.paths.auth,        require('../routes/auth') );
+    this.app.use(   this.paths.categorias,  require('../routes/categorias') );
+    this.app.use(   this.paths.buscar,      require('../routes/buscar') );
+    this.app.use(   this.paths.products,    require('../routes/products') );
+    this.app.use(   this.paths.usuarios,    require('../routes/user') );
 }
 
 
