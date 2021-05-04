@@ -1,4 +1,7 @@
 const { response }  = require('express');
+const { ObjectId } = require('mongoose').Types;
+
+const {     Category, User, Product } = require('../models');
 
 
 const coleccionesPermitidas = [
@@ -8,6 +11,21 @@ const coleccionesPermitidas = [
     'roles'
 
 ];
+
+
+
+const buscarUsuario = async ( termino = '',  res = response ) => {
+    const esMongoID = ObjectId.isValid( termino );
+
+    if( esMongoID  ){
+        const user = await User.findById( termino );
+
+        res.json(user);
+
+    }
+}
+
+
 
 
 const buscar = ( req, res = reponse ) => {
@@ -22,9 +40,9 @@ const buscar = ( req, res = reponse ) => {
     }
 
 
-    switch( key ){
+    switch( coleccion ){
 
-        case  'user':
+        case  'user': buscarUsuario( termino, res );
 
         break;
 
@@ -44,10 +62,7 @@ const buscar = ( req, res = reponse ) => {
 
 
 
-    res.json({
-        coleccion, 
-        termino
-    });
+
 }
 
 
