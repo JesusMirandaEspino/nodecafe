@@ -55,10 +55,7 @@ const buscarCategory = async ( termino = '',  res = response ) => {
 
     const regex = new RegExp( termino, 'i' );
 
-    const categories = await Category.find( { 
-        $or: [ { categoryname: regex  }, { user: regex  }],
-        $and: [ { categorystatus: true } ]
-    } );
+    const categories = await Category.find( { categoryname: regex , categorystatus: true }  );
     res.json({
             results: categories
         });
@@ -79,10 +76,7 @@ const buscarProducts = async ( termino = '',  res = response ) => {
 
     const regex = new RegExp( termino, 'i' );
 
-    const products = await Category.find( { 
-        $or: [ { productname: regex  }, { category: regex  }],
-        $and: [ { productystatus: true } ]
-    } );
+    const products = await Category.find(  { productname: regex  },  { productystatus: true } );
     res.json({
             results: products
         });
