@@ -66,7 +66,7 @@ const buscarProducts = async ( termino = '',  res = response ) => {
     const esMongoID = ObjectId.isValid( termino );
 
     if( esMongoID  ){
-        const product = await Category.findById( termino );
+        const product = await Product.findById( termino );
 
         return res.json({
             results:  ( product ) ? [ product ] : []  //categoryname
@@ -76,7 +76,7 @@ const buscarProducts = async ( termino = '',  res = response ) => {
 
     const regex = new RegExp( termino, 'i' );
 
-    const products = await Category.find(  { productname: regex  },  { productystatus: true } );
+    const products = await Product.find(  { productname: regex, productystatus: true } );
     res.json({
             results: products
         });
