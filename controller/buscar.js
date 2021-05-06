@@ -69,22 +69,22 @@ const buscarProducts = async ( termino = '',  res = response ) => {
     const esMongoID = ObjectId.isValid( termino );
 
     if( esMongoID  ){
-        const category = await Category.findById( termino );
+        const product = await Category.findById( termino );
 
         return res.json({
-            results:  ( category ) ? [ category ] : []  //categoryname
+            results:  ( product ) ? [ product ] : []  //categoryname
         });
     }
 
 
     const regex = new RegExp( termino, 'i' );
 
-    const categories = await Category.find( { 
-        $or: [ { categoryname: regex  }, { user: regex  }],
-        $and: [ { categorystatus: true } ]
+    const products = await Category.find( { 
+        $or: [ { productname: regex  }, { category: regex  }],
+        $and: [ { productystatus: true } ]
     } );
     res.json({
-            results: categories
+            results: products
         });
 }
 
