@@ -20,11 +20,21 @@ const buscarUsuario = async ( termino = '',  res = response ) => {
     if( esMongoID  ){
         const user = await User.findById( termino );
 
-        res.json({
+        return res.json({
             results:  ( user ) ? [ user ] : []
         });
-
     }
+
+
+    const regex = new RegExp( termino, 'i' );
+
+    const users = await User.find( { 
+        $or: [ { userName: regex  }, { userEmail: regex  }],
+        $and: [ { userStatus: true } ]
+    } );
+    res.json({
+            results: users
+        });
 }
 
 
