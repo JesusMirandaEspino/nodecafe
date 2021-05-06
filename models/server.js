@@ -19,6 +19,7 @@ constructor(){
         categorias:  '/api/categorias',
         products:    '/api/products',
         usuarios:    '/api/users',
+        uploads:    '/api/uploads',
         
     }
 
@@ -54,6 +55,7 @@ routes(){
     this.app.use(   this.paths.auth,        require('../routes/auth') );
     this.app.use(   this.paths.categorias,  require('../routes/categorias') );
     this.app.use(   this.paths.buscar,      require('../routes/buscar') );
+    this.app.use(   this.paths.uploads,      require('../routes/uploads') );
     this.app.use(   this.paths.products,    require('../routes/products') );
     this.app.use(   this.paths.usuarios,    require('../routes/user') );
 }
