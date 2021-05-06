@@ -40,6 +40,56 @@ const buscarUsuario = async ( termino = '',  res = response ) => {
 
 
 
+
+const buscarCategory = async ( termino = '',  res = response ) => {
+    const esMongoID = ObjectId.isValid( termino );
+
+    if( esMongoID  ){
+        const category = await Category.findById( termino );
+
+        return res.json({
+            results:  ( category ) ? [ category ] : []  //categoryname
+        });
+    }
+
+
+    const regex = new RegExp( termino, 'i' );
+
+    const categories = await Category.find( { 
+        $or: [ { categoryname: regex  }, { user: regex  }],
+        $and: [ { categorystatus: true } ]
+    } );
+    res.json({
+            results: categories
+        });
+}
+
+
+const buscarProducts = async ( termino = '',  res = response ) => {
+    const esMongoID = ObjectId.isValid( termino );
+
+    if( esMongoID  ){
+        const category = await Category.findById( termino );
+
+        return res.json({
+            results:  ( category ) ? [ category ] : []  //categoryname
+        });
+    }
+
+
+    const regex = new RegExp( termino, 'i' );
+
+    const categories = await Category.find( { 
+        $or: [ { categoryname: regex  }, { user: regex  }],
+        $and: [ { categorystatus: true } ]
+    } );
+    res.json({
+            results: categories
+        });
+}
+
+
+
 const buscar = ( req, res = reponse ) => {
 
     const { coleccion, termino  }  = req.params;
@@ -58,11 +108,11 @@ const buscar = ( req, res = reponse ) => {
 
         break;
 
-        case 'category':
+        case 'category': buscarCategory( termino, res );
 
         break;
 
-        case 'product':
+        case 'product': buscarProducts( termino, res );
 
         break;
 
