@@ -1,7 +1,10 @@
 const express = require( 'express' );
 const cors = require('cors')
-const { dbConection } = require( '../database/config.js' );
 const fileUpload  = require('express-fileupload');
+
+
+const { dbConection } = require( '../database/config.js' );
+
 
 
 //TODO clase server 
