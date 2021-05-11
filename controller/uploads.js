@@ -14,13 +14,22 @@ const cargarArchivo = async ( req, res = response ) => {
         return;
     }
 
-    // imagenes 
-    const pathCompleto = await subirArchivo( req.files );
+        try{
+
+        // imagenes 
+        const pathCompleto = await subirArchivo( req.files, [ 'txt', 'md' ] );
+
+        res.json({ 
+            path: pathCompleto
+        });
+
+        }catch(msg){
+            res.status(400).json({ msg });
+        }
 
 
-    res.json({ 
-        path: pathCompleto
-    });
+
+
 
 } 
 

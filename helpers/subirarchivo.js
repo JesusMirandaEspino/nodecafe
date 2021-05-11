@@ -29,7 +29,7 @@ const subirArchivo = ( files, extensionesValidas = [ 'JPG', 'PNG', 'JPEG', 'GIF'
         return reject(err);
         }
 
-        resolve(uploadPath);
+        resolve(nameTemp);
     });
 
 
