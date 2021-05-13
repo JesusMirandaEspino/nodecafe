@@ -34,7 +34,7 @@ const userShema = Schema({
         default: false
     }, 
     
-    userImg: {
+    img: {
         type: String
     }
 
