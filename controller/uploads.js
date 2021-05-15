@@ -1,10 +1,12 @@
 const path = require('path');
 const fs = require('fs');
 
-const { response } = require("express");
+const { response } = require('express');
 const { subirArchivo } = require('../helpers');
 
+const  cloudinary = require('cloudinary').v2
 
+cloudinary.config( process.env.CLOUDINARY_URL );
 
 const { User, Product } = require('../models');
 
@@ -87,6 +89,62 @@ const actualizarImagen = async ( req, res = response ) => {
 }
 
 
+const actualizarImagenCloudinary = async ( req, res = response ) => {
+
+    const { id, coleccion } = req.params;
+
+    let modelo;
+
+    switch( coleccion ){
+        case 'users': 
+            modelo = await User.findById(id);
+            if( !modelo ){ 
+                return res.status(400).json({ msg: `No existe un usuario con el id ${id}` });
+            }
+
+        break;
+
+        case 'products':
+            modelo = await Product.findById(id);
+            if( !modelo ){ 
+                return res.status(400).json({ msg: `No existe el producto con el id ${id}` });
+            }       
+
+        break;
+
+
+
+        default:
+            return res.status(500).json( { msg: 'Se me olvido validar esto' } );
+
+    }
+
+
+        //Limpiar imagenes previas
+        if( modelo.img ){
+            //Hay que borrar la imagen del Servidor
+
+
+
+        }
+
+        const { tempFilePath } = req.files.archivo;
+
+        const resp = await cloudinary.uploader.upload( tempFilePath );
+
+
+        //const pathCompleto = await subirArchivo( req.files, undefined, coleccion );
+        //modelo.img = pathCompleto;
+
+        //await modelo.save();
+
+    res.json({
+        resp
+    });
+}
+
+
+
 const mostrarImagen = async  ( req, res = response ) => {
 
     const { id, coleccion } = req.params;
@@ -133,5 +191,6 @@ const mostrarImagen = async  ( req, res = response ) => {
 module.exports = {
     cargarArchivo,
     actualizarImagen,
-    mostrarImagen
+    mostrarImagen,
+    actualizarImagenCloudinary
 }
