@@ -87,14 +87,45 @@ const actualizarImagen = async ( req, res = response ) => {
 }
 
 
-const mostrarImagen = ( req, res = response ) => {
+const mostrarImagen = async  ( req, res = response ) => {
 
     const { id, coleccion } = req.params;
 
+    let modelo;
 
-    res.json({ 
-        id,
-        coleccion
+    switch( coleccion ){
+        case 'users': 
+            modelo = await User.findById(id);
+            if( !modelo ){ 
+                return res.status(400).json({ msg: `No existe un usuario con el id ${id}` });
+            }
+
+        break;
+
+        case 'products':
+            modelo = await Product.findById(id);
+            if( !modelo ){ 
+                return res.status(400).json({ msg: `No existe el producto con el id ${id}` });
+            }       
+
+        break;
+
+        default:
+            return res.status(500).json( { msg: 'Se me olvido validar esto' } );
+
+    }
+
+        //Limpiar imagenes previas
+        if( modelo.img ){
+            //Hay que borrar la imagen del Servidor
+            const pathImagen = path.join( __dirname,  '../uploads', coleccion, modelo.img );
+            if( fs.existsSync( pathImagen ) ){
+                return res.sendFile( pathImagen );
+            }
+        }
+
+    res.json({
+        msg: 'Falta placeholder'
     });
 }
 
