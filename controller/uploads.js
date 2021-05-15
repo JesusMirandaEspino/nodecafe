@@ -33,6 +33,12 @@ const cargarArchivo = async ( req, res = response ) => {
 
 const actualizarImagen = async ( req, res = response ) => {
 
+    // validar si se envio un archivo
+    if (!req.files || Object.keys(req.files).length === 0  || !req.files.archivo ) {
+        res.status(400).json({ msg: 'No hay archivo para enviar' });
+        return;
+    }
+
     const { id, coleccion } = req.params;
 
     let modelo;
