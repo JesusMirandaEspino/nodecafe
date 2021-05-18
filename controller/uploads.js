@@ -124,7 +124,10 @@ const actualizarImagenCloudinary = async ( req, res = response ) => {
         if( modelo.img ){
             //Hay que borrar la imagen del Servidor
 
-
+            const nombreArr = modelo.img.split('/');
+            const nameImg = nombreArr[ nombreArr.length - 1 ];
+            const [ public_id ] = nameImg.split('.');
+            cloudinary.uploader.destroy( public_id );
 
         }
 
